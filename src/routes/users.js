@@ -6,7 +6,10 @@ module.exports = (app) => {
 
   const create = async (req, res) => {
     const result = await app.services.user.save(req.body);
-    res.status(201).send(result[0]);
+
+    if (result.error) return res.status(400).json(result);
+
+    return res.status(201).send(result[0]);
   };
 
   return { findAll, create };
