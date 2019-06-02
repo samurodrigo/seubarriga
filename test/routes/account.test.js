@@ -52,3 +52,15 @@ test('Deve atualizar uma conta', () => {
       expect(res.body.name).toBe('Account updated');
     });
 });
+
+test('Deve remover uma conta', () => {
+  return app.db('accounts')
+    .insert({ name: 'Account by ID', user_id: user.id }, ['id'])
+    .then((account) => {
+      return request(app)
+        .delete(`${MAIN_ROUTE}/${account[0].id}`);
+    })
+    .then((res) => {
+      expect(res.status).toBe(204);
+    });
+});
