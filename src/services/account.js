@@ -1,6 +1,8 @@
+const ValidationMessage = require('../errors/ValidationMessage');
+
 module.exports = (app) => {
   const save = async (account) => {
-    if (!account.name) return { error: 'O Nome é um atributo obrigatório' };
+    if (!account.name) throw new ValidationMessage('O Nome é um atributo obrigatório');
     return app.db('accounts').insert(account, '*');
   };
 
